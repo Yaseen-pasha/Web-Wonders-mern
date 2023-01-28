@@ -7,4 +7,4 @@ mongoose.connect(DB || "mongodb://localhost:27017/Mern_NEW", {
     useUnifiedTopology: true
 }).then(() => {
     console.log(`connnection successful`);
-}).catch((err) => console.log(`${err} no connection`));
+}).catch((err) => console.log(`${err} \nno connection`));
