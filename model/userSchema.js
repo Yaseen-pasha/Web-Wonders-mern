@@ -64,9 +64,7 @@ const userSchema = new mongooose.Schema({
 
 // we are hashing the password  
 userSchema.pre('save', async function (next) {
- console.log("Hii I am pre ");
     if (this.isModified('password')) {
-        console.log("Hii I am pre password ");
         this.password = await bcrypt.hash(this.password, 12);
         this.cpassword = await bcrypt.hash(this.cpassword, 12);
     }
@@ -85,7 +83,7 @@ userSchema.methods.generateAuthToken = async function () {
     }
 }
 
-// stored the message 
+// stored the message in the same user schema
 userSchema.methods.addMessage = async function (name, email, phone, message) {
     try {
         this.messages = this.messages.concat({ name, email, phone, message });
@@ -95,7 +93,6 @@ userSchema.methods.addMessage = async function (name, email, phone, message) {
         console.log(error)
     }
 }
-
 
 // collection creation 
 const User = mongooose.model('USER', userSchema);

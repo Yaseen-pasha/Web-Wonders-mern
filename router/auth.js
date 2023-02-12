@@ -8,26 +8,25 @@ require('../db/conn');
 const User = require("../model/userSchema");
 
 router.post("/register", async (req, res)=>{
-    const { name, email, phone, work, password, cpassword} = req.body;
-    if (!name || !email || !phone || !work || !password || !cpassword) {
-        return res.status(422).json({ error: "Plz filled the field properly" });
-    }
     try {
-    const userExist = await User.findOne({email:email});
-    if(userExist){
-    res.status(422).json({"message":"User Already Exist"});
-    }else if (password != cpassword) {
-    return res.status(422).json({ error: "password are not matching" });
-    } else{
-        const userData = new User(req.body);
-        await userData.save()
-        res.status(201).json({"message":"user registered Successfully"});
-    }
-    
-} catch (error) {
+        const { name, email, phone, work, password, cpassword} = req.body;
+        if (!name || !email || !phone || !work || !password || !cpassword) {
+            return res.status(422).json({ error: "Plz filled the field properly" });
+        }
+        const userExist = await User.findOne({email:email});
+        if(userExist){
+        res.status(422).json({"message":"User Already Exist"});
+        }else if (password != cpassword) {
+        return res.status(422).json({ error: "password are not matching" });
+        } else{
+            const userData = new User(req.body);
+            await userData.save()
+            res.status(201).json({"message":"user registered Successfully"});
+        }
+    } catch (error) {
     res.status(400).json({"message":"Plz Fill the form properly"});
-    console.log(error)   
-}
+    console.log(error)
+    }
 });
 
 // login route 
@@ -82,7 +81,7 @@ router.post('/contact', authenticate, async (req, res) => {
         const userContact = await User.findOne({ _id: req.userID });
         if (userContact) {
             const userMessage = await userContact.addMessage(name, email, phone, message);
-            await userContact.save();
+            await userMessage.save();
             res.status(201).json({ message: "user Contact successfully" });
         }   
     } catch (error) {
@@ -94,7 +93,7 @@ router.post('/contact', authenticate, async (req, res) => {
 router.get('/logout', (req, res) => {
     console.log(`Hello my Logout Page`);
     res.clearCookie('jwtoken', { path: '/' });
-    res.status(200).send('User lOgout');
+    res.status(200).send('User logout');
 });
 
 module.exports = router;
