@@ -17,7 +17,7 @@ app.use(express.json());
 // we link the router files to make our route easy 
 app.use(require('./router/auth'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 
 // if(process.env.NODE_ENV=== "production"){
     app.use(express.static("client/build"));
