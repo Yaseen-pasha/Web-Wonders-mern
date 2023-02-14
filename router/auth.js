@@ -57,8 +57,8 @@ router.post('/signin', async (req, res) => {
 });
 
 
-// about us ka page 
-router.get('/about', authenticate ,(req, res) => {
+// blog ka page 
+router.get('/blog', authenticate ,(req, res) => {
     // console.log(`Hello my About`);
     res.send(req.rootUser);
 });
